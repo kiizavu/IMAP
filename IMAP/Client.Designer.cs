@@ -72,6 +72,7 @@ namespace IMAP
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.listView1);
             this.Name = "Client";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Client";
             this.Load += new System.EventHandler(this.Client_Load);
             this.ResumeLayout(false);

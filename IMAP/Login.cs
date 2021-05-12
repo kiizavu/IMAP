@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using S22.Imap;
@@ -21,12 +22,16 @@ namespace IMAP
         public static string user;
         public static string pass;
 
+        private readonly SynchronizationContext synchronizationContext;
+        private DateTime dt = DateTime.Now;
+
         protected static ImapClient client { get; set; }
 
         public Login()
         {
             InitializeComponent();
             initData();
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         public string ReturnUser
@@ -64,7 +69,7 @@ namespace IMAP
         //login
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Initialize();
+                Initialize();
         }
 
 
@@ -84,12 +89,11 @@ namespace IMAP
 
 
         
-        public void Initialize()
+        public async void Initialize()
         {
             user = tbUser.Text;
             pass = tbPass.Text;
             client = new ImapClient("imap.gmail.com", 993, true);
-            //ShowWaitForm();
                 
             //check username, password
             try
@@ -105,9 +109,11 @@ namespace IMAP
             Checked();
             Client c = new Client();
             c.log = this; //Truyền dữ liệu bên này qua cho bên kia
-            c.Show();
+            new Thread(() => new Client().ShowDialog()).Start();
             this.Visible = false;
         }
+
+
 
         //Save username, password if click remme
         public void initData()

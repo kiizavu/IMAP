@@ -21,6 +21,8 @@ namespace IMAP
 
         static Client f;
 
+        loadingForm loading;
+
 
         public Login log { get; set; } //Lấy dữ liệu của form Login
 
@@ -36,23 +38,30 @@ namespace IMAP
 
         private void Client_Load(object sender, EventArgs e)
         {
+            loading = new loadingForm();
+            loading.Show();
             CheckForIllegalCrossThreadCalls = false;
             client = new ImapClient("imap.gmail.com", 993, Login.user, Login.pass, AuthMethod.Login, true);
-
-            getFolders();
-
+            
+            Task.Run(() => getFolders());
+            
             starReceiveMail();
         }
 
 
         private void getFolders()
         {
+            this.Enabled = false;
             foreach (string m in client.ListMailboxes())
             {
                 MailboxInfo info = client.GetMailboxInfo(m);
                 listView1.Items.Add(info.Name);
             }
+            loading.Close();
+            this.Enabled = true;
         }
+
+
 
         private void starReceiveMail()
         {
@@ -81,7 +90,7 @@ namespace IMAP
             string folderSelected = listView1.SelectedItems[0].Text;
             listView2.Clear();
             IEnumerable<uint> uids = client.Search(SearchCondition.All(), folderSelected);
-            IEnumerable<MailMessage> messages = client.GetMessages(uids);
+            IEnumerable<MailMessage> messages = client.GetMessages(uids, true, folderSelected);
             foreach (MailMessage m in messages)
                 listView2.Items.Add("Subject: " + m.Subject);
         }
