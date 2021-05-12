@@ -95,6 +95,7 @@ namespace IMAP
             this.btnExit.TabIndex = 20;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // cbRemember
             // 
@@ -133,6 +134,7 @@ namespace IMAP
             this.btnLogin.TabIndex = 17;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = false;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // tbPass
             // 
@@ -146,6 +148,7 @@ namespace IMAP
             this.tbPass.Size = new System.Drawing.Size(387, 34);
             this.tbPass.TabIndex = 16;
             this.tbPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbUP_KeyDown);
             // 
             // tbUser
             // 
@@ -159,6 +162,7 @@ namespace IMAP
             this.tbUser.Size = new System.Drawing.Size(387, 34);
             this.tbUser.TabIndex = 15;
             this.tbUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbUser.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbUP_KeyDown);
             // 
             // Login
             // 
@@ -180,9 +184,14 @@ namespace IMAP
             this.Controls.Add(this.tbUser);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Login";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.TransparencyKey = System.Drawing.Color.Black;
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Login_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Login_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Login_MouseUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
