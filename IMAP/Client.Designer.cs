@@ -55,6 +55,7 @@ namespace IMAP
             // 
             // listView2
             // 
+            this.listView2.FullRowSelect = true;
             this.listView2.HideSelection = false;
             this.listView2.Location = new System.Drawing.Point(161, 12);
             this.listView2.Name = "listView2";
@@ -62,6 +63,7 @@ namespace IMAP
             this.listView2.TabIndex = 2;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.List;
+            this.listView2.ItemActivate += new System.EventHandler(this.listView2_ItemActivate);
             // 
             // Client
             // 

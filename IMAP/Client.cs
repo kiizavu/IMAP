@@ -84,15 +84,35 @@ namespace IMAP
                 f.richTextBox1.AppendText($"From: {m.From} \nSubject: {m.Subject}\nBody: {m.Body}\n");
             });
         }
-
+        string folderSelected;
         private void listView1_ItemActivate(object sender, EventArgs e)
         {
-            string folderSelected = listView1.SelectedItems[0].Text;
+            folderSelected = listView1.SelectedItems[0].Text;
             listView2.Clear();
-            IEnumerable<uint> uids = client.Search(SearchCondition.All(), folderSelected);
-            IEnumerable<MailMessage> messages = client.GetMessages(uids, true, folderSelected);
-            foreach (MailMessage m in messages)
-                listView2.Items.Add("Subject: " + m.Subject);
+            listView2.Columns.Add("ID", 100);
+            listView2.Columns.Add("Subject");
+            listView2.View = View.Details;
+
+            Task.Run(() =>
+            {
+                IEnumerable<uint> uids = client.Search(SearchCondition.All(), folderSelected);
+                int i = 0;
+                foreach (uint uid in uids.Reverse())
+                {
+                    using (MailMessage msg = client.GetMessage(uid, FetchOptions.Normal, true, folderSelected))
+                    {
+                        listView2.Items.Add(uid.ToString());
+                        listView2.Items[i++].SubItems.Add(msg.Subject);
+                    }
+                }
+            });
+        }
+
+        private void listView2_ItemActivate(object sender, EventArgs e)
+        {
+            uint MailSelectedID =  uint.Parse(listView2.SelectedItems[0].SubItems[0].Text);
+            MailMessage m = client.GetMessage(MailSelectedID, FetchOptions.Normal, true, folderSelected);
+            richTextBox1.Text = $"From: {m.From} \nSubject: {m.Subject}\nBody: {m.Body}\n";
         }
     }
 }

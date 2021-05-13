@@ -89,7 +89,7 @@ namespace IMAP
 
 
         
-        public async void Initialize()
+        public void Initialize()
         {
             user = tbUser.Text;
             pass = tbPass.Text;
