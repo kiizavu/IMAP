@@ -12,10 +12,32 @@ namespace IMAP
 {
     public partial class MailItem : UserControl
     {
+
         public MailItem()
         {
             InitializeComponent();
         }
+
+        public Label From
+        {
+            get { return this.lbFrom; }
+        }
+
+        public Label Subject
+        {
+            get { return this.lbSubject; }
+        }
+
+        public Label Date
+        {
+            get { return this.lbDate; }
+        }
+
+        public Label Body
+        {
+            get { return this.lbBody; }
+        }
+
 
         private void MailItem_MouseEnter(object sender, EventArgs e)
         {

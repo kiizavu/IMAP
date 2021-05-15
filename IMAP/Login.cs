@@ -22,8 +22,6 @@ namespace IMAP
         public static string user;
         public static string pass;
 
-        private readonly SynchronizationContext synchronizationContext;
-        private DateTime dt = DateTime.Now;
 
         protected static ImapClient client { get; set; }
 
@@ -31,18 +29,8 @@ namespace IMAP
         {
             InitializeComponent();
             initData();
-            synchronizationContext = SynchronizationContext.Current;
         }
 
-        public string ReturnUser
-        {
-            get { return tbUser.Text; }
-        }
-
-        public string ReturnPass
-        {
-            get { return tbPass.Text; }
-        }
 
 
 
@@ -107,10 +95,10 @@ namespace IMAP
                 return;
             }
             Checked();
-            Client c = new Client();
+            Main c = new Main();
             c.log = this; //Truyền dữ liệu bên này qua cho bên kia
-            new Thread(() => new Client().ShowDialog()).Start();
-            this.Visible = false;
+            new Thread(() => new Main().ShowDialog()).Start();
+            this.Close();
         }
 
 

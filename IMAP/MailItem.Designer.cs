@@ -70,7 +70,7 @@ namespace IMAP
             this.lbSubject.ForeColor = System.Drawing.Color.White;
             this.lbSubject.Location = new System.Drawing.Point(89, 51);
             this.lbSubject.Name = "lbSubject";
-            this.lbSubject.Size = new System.Drawing.Size(100, 22);
+            this.lbSubject.Size = new System.Drawing.Size(465, 22);
             this.lbSubject.TabIndex = 2;
             this.lbSubject.Text = "Subject";
             this.lbSubject.MouseEnter += new System.EventHandler(this.MailItem_MouseEnter);
@@ -78,14 +78,14 @@ namespace IMAP
             // 
             // lbDate
             // 
-            this.lbDate.AutoSize = true;
             this.lbDate.Font = new System.Drawing.Font("Times New Roman", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbDate.ForeColor = System.Drawing.Color.Silver;
-            this.lbDate.Location = new System.Drawing.Point(451, 23);
+            this.lbDate.Location = new System.Drawing.Point(376, 23);
             this.lbDate.Name = "lbDate";
-            this.lbDate.Size = new System.Drawing.Size(37, 17);
+            this.lbDate.Size = new System.Drawing.Size(178, 17);
             this.lbDate.TabIndex = 4;
             this.lbDate.Text = "Date";
+            this.lbDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.lbDate.MouseEnter += new System.EventHandler(this.MailItem_MouseEnter);
             this.lbDate.MouseLeave += new System.EventHandler(this.MailItem_MouseLeave);
             // 
@@ -99,6 +99,7 @@ namespace IMAP
             this.lbBody.Size = new System.Drawing.Size(465, 64);
             this.lbBody.TabIndex = 5;
             this.lbBody.Text = "Body\r\n";
+            this.lbBody.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lbBody.MouseEnter += new System.EventHandler(this.MailItem_MouseEnter);
             this.lbBody.MouseLeave += new System.EventHandler(this.MailItem_MouseLeave);
             // 
