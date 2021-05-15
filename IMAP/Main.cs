@@ -22,13 +22,44 @@ namespace IMAP
 
         CancellationTokenSource source = null;
 
-        public Label From { get; }
+        loadingProgress lP;
+
 
         public Login log { get; set; } //Lấy dữ liệu của form Login
 
-        protected static ImapClient client { get; set; }
+        public ImapClient client { get; set; }
 
-        loadingProgress lP;
+
+        public Label Subject
+        {
+            get { return this.lbSubject; }
+        }
+
+        public Label Date
+        {
+            get { return this.lbDate; }
+        }
+
+        public Label Attachment
+        {
+            get { return this.lbAttachments; }
+        }
+
+        public Label NoMailSelected
+        {
+            get { return this.lbNoMailSelect; }
+        }
+
+        public RichTextBox Body
+        {
+            get { return this.rtbBody; }
+        }
+
+        public RichTextBox From
+        {
+            get { return this.rtbFrom; }
+        }
+
 
         public Main()
         {
@@ -147,8 +178,12 @@ namespace IMAP
             client = new ImapClient("imap.gmail.com", 993, Login.user, Login.pass, AuthMethod.Login, true);
             lP = new loadingProgress();
             lP.Location = new Point(65, 790);
+
             Task.Run(() => loadMails("INBOX"));
+
+            starReceiveMail();
         }
+
 
 
 
@@ -158,8 +193,7 @@ namespace IMAP
         {
             this.Invoke((MethodInvoker)delegate
             {
-                pnlFolder.Controls.Add(lP);
-                pnlContainer.Controls.Add(lbNoMail);
+                needToLoad();
             });
 
             if (source != null)
@@ -181,25 +215,34 @@ namespace IMAP
 
             //Get mail
             int i = 0;
-            List <MailItem> mailItems = new List<MailItem>();
+            List<MailItem> mailItems = new List<MailItem>();
             Task.Run(() =>
             {
+                IEnumerable<uint> uidsUnSeen = client.Search(SearchCondition.Unseen());
                 IEnumerable<uint> uids = client.Search(SearchCondition.All(), folderName);
                 foreach (uint uid in uids)
                 {
-                    using (MailMessage msg = client.GetMessage(uid, FetchOptions.Normal, true, folderName))
+                    bool isUnSeen = uidsUnSeen.Contains(uid);
+                    using (MailMessage msg = client.GetMessage(uid, FetchOptions.Normal, false, folderName))
                     {
                         mailItems.Add(new MailItem());
                         mailItems[i].Dock = DockStyle.Top;
-
+                        mailItems[i].main = this;
                         if (token.IsCancellationRequested)
                             break;
                         else
                             this.BeginInvoke((Action)(() =>
                             {
                                 pnlContainer.Controls.Add(mailItems[i]);
+                                if (isUnSeen)
+                                {
+                                    mailItems[i].UnSeen.Text = isUnSeen.ToString();
+                                    mailItems[i].BackColor = Color.FromArgb(59, 72, 77);
+                                }
+                                mailItems[i].Uid.Text = uid.ToString();
                                 mailItems[i].From.Text = msg.From.DisplayName;
-                                mailItems[i].Date.Text = msg.Date().ToString();
+                                mailItems[i].MailAddress.Text = msg.From.Address;
+                                mailItems[i].Date.Text = msg.Date()?.ToString("dd-MM-yyyy h:mm:ss tt");
                                 mailItems[i].Subject.Text = msg.Subject;
                                 mailItems[i++].Body.Text = msg.Body;
                             }));
@@ -217,6 +260,55 @@ namespace IMAP
         {
             Login login = new Login();
             login.ShowDialog();
+        }
+
+        private void starReceiveMail()
+        {
+            Task.Run(() =>
+            {
+                client.NewMessage += new EventHandler<IdleMessageEventArgs>(OnNotifyMessage);
+                while (true) ;
+            });
+        }
+
+        void OnNotifyMessage(object sender, IdleMessageEventArgs e)
+        {
+            var result = MessageBox.Show("New mail received!\nGo to All Mail to read it?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                loadMails("[Gmail]/All Mail");
+            }
+        }
+
+        private void needToLoad()
+        {
+            pnlFolder.Controls.Add(lP);
+            pnlContainer.Controls.Add(lbNoMail);
+
+            setViEnFalse(lbDate);
+
+            setViEnFalse(lbSubject);
+
+            setViEnFalse(lbAttachments);
+
+            setViEnFalse(rtbFrom);
+
+            setViEnFalse(rtbBody);
+
+            lbNoMailSelect.Enabled = true;
+            lbNoMailSelect.Visible = true;
+        }
+
+        private void setViEnFalse(Label lb)
+        {
+            lb.Visible = false;
+            lb.Enabled = false;
+        }
+
+        private void setViEnFalse(RichTextBox rtb)
+        {
+            rtb.Visible = false;
+            rtb.Enabled = false;
         }
     }
 }

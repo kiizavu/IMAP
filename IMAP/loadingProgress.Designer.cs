@@ -43,7 +43,7 @@ namespace IMAP
             this.bunifuCircleProgressbar1.animated = true;
             this.bunifuCircleProgressbar1.animationIterval = 2;
             this.bunifuCircleProgressbar1.animationSpeed = 1;
-            this.bunifuCircleProgressbar1.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuCircleProgressbar1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
             this.bunifuCircleProgressbar1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bunifuCircleProgressbar1.BackgroundImage")));
             this.bunifuCircleProgressbar1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F);
             this.bunifuCircleProgressbar1.ForeColor = System.Drawing.Color.SeaGreen;
@@ -91,7 +91,7 @@ namespace IMAP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Transparent;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bunifuCircleProgressbar1);
             this.Name = "loadingProgress";
