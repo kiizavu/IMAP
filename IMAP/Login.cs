@@ -57,7 +57,7 @@ namespace IMAP
         //login
         private void btnLogin_Click(object sender, EventArgs e)
         {
-                Initialize();
+            Initialize();
         }
 
 
@@ -72,17 +72,17 @@ namespace IMAP
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Environment.Exit(0);
         }
 
 
-        
+
         public void Initialize()
         {
             user = tbUser.Text;
             pass = tbPass.Text;
             client = new ImapClient("imap.gmail.com", 993, true);
-                
+
             //check username, password
             try
             {
@@ -124,7 +124,7 @@ namespace IMAP
 
 
         //Kiểm tra đã đánh dấu Remmeber me chưa ?
-        public void Checked() 
+        public void Checked()
         {
             if (!cbRemember.Checked)
             {

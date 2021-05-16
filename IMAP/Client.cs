@@ -23,7 +23,7 @@ namespace IMAP
 
         loadingForm loading;
 
-
+        private Dictionary<string, List<MailItem>> dicMail = new Dictionary<string, List<MailItem>>();
         public Login log { get; set; } //Lấy dữ liệu của form Login
 
         protected static ImapClient client { get; set; }

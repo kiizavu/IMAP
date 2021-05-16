@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using S22.Imap;
+using System.Net.Mail;
 
 namespace IMAP
 {
@@ -70,11 +72,13 @@ namespace IMAP
 
         public void MailItem_Click(object sender, EventArgs e)
         {
+            uint uid = uint.Parse(lbUid.Text);
+
             if (lbUnSeen.Text == "True")
             {
                 lbUnSeen.Text = "False";
                 this.BackColor = Color.FromArgb(46, 52, 57);
-                main.client.SetMessageFlags(uint.Parse(lbUid.Text), null, 0);
+                main.client.SetMessageFlags(uid, null, 0);
             }
             main.From.Clear();
             main.From.SelectionFont = new Font(main.From.Font, FontStyle.Bold);
@@ -93,6 +97,16 @@ namespace IMAP
             setViEnTrue(main.Body);
 
             setViEnTrue(main.Attachment);
+
+            main.Attachment.Clear();
+            main.Attachment.Text = "No attachments.";
+            if (main.dicAttachment.ContainsKey(uid))
+            {
+                main.Attachment.Text = "Attachment:";
+                foreach (var item in main.dicAttachment[uid])
+                    main.Attachment.Text += "\n" + item;
+            }
+
 
             main.NoMailSelected.Visible = false;
             main.NoMailSelected.Enabled = false;

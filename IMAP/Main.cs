@@ -24,10 +24,17 @@ namespace IMAP
 
         loadingProgress lP;
 
+        private Color activeColor = Color.FromArgb(2, 168, 244);
+
+        private Color inactiveColor = Color.FromArgb(22, 25, 28);
+
+        //private Dictionary<string, List<MailItem>> dicMail = new Dictionary<string, List<MailItem>>();
 
         public Login log { get; set; } //Lấy dữ liệu của form Login
 
         public ImapClient client { get; set; }
+
+        public Dictionary<uint, List<string>> dicAttachment = new Dictionary<uint, List<string>>();
 
 
         public Label Subject
@@ -40,10 +47,6 @@ namespace IMAP
             get { return this.lbDate; }
         }
 
-        public Label Attachment
-        {
-            get { return this.lbAttachments; }
-        }
 
         public Label NoMailSelected
         {
@@ -58,6 +61,11 @@ namespace IMAP
         public RichTextBox From
         {
             get { return this.rtbFrom; }
+        }
+
+        public RichTextBox Attachment
+        {
+            get { return this.rtbAttach; }
         }
 
 
@@ -107,49 +115,49 @@ namespace IMAP
         //////////////////////////button click//////////////////////////////////////////
         private void btnInbox_Click(object sender, EventArgs e)
         {
-            btnInbox.selected = true;
+            activeButton(btnInbox);
             loadMails("INBOX");
         }
 
         private void btnAll_Click(object sender, EventArgs e)
         {
-            btnAll.selected = true;
+            activeButton(btnAll);
             loadMails("[Gmail]/All Mail");
         }
 
         private void btnSent_Click(object sender, EventArgs e)
         {
-            btnSent.selected = true;
+            activeButton(btnSent);
             loadMails("[Gmail]/Sent Mail");
         }
 
         private void btnDrafts_Click(object sender, EventArgs e)
         {
-            btnDrafts.selected = true;
+            activeButton(btnDrafts);
             loadMails("[Gmail]/Drafts");
         }
 
         private void btnImportant_Click(object sender, EventArgs e)
         {
-            btnImportant.selected = true;
+            activeButton(btnImportant);
             loadMails("[Gmail]/Important");
         }
 
         private void btnStarred_Click(object sender, EventArgs e)
         {
-            btnStarred.selected = true;
+            activeButton(btnStarred);
             loadMails("[Gmail]/Starred");
         }
 
         private void btnSpam_Click(object sender, EventArgs e)
         {
-            btnSpam.selected = true;
+            activeButton(btnSpam);
             loadMails("[Gmail]/Spam");
         }
 
         private void btnTrash_Click(object sender, EventArgs e)
         {
-            btnTrash.selected = true;
+            activeButton(btnTrash);
             loadMails("[Gmail]/Trash");
         }
 
@@ -159,6 +167,11 @@ namespace IMAP
 
             if (result == DialogResult.Yes)
             {
+                if (source != null)
+                {
+                    source.Cancel();
+                    source.Dispose();
+                }
                 client.Logout();
                 this.Close();
 
@@ -174,8 +187,9 @@ namespace IMAP
         //////////////////////////Form load/////////////////////////////////////////////
         private void Main_Load(object sender, EventArgs e)
         {
-            btnInbox.selected = true;
+            activeButton(btnInbox);
             client = new ImapClient("imap.gmail.com", 993, Login.user, Login.pass, AuthMethod.Login, true);
+
             lP = new loadingProgress();
             lP.Location = new Point(65, 790);
 
@@ -191,16 +205,20 @@ namespace IMAP
         //////////////////////////Function//////////////////////////////////////////////
         private void loadMails(string folderName)
         {
+            //Add the loading animation and hide the mail contain
             this.Invoke((MethodInvoker)delegate
             {
                 needToLoad();
             });
 
+            //when click on another folder button, check if token source exist
+            //if exist, remove it
             if (source != null)
             {
                 source.Cancel();
                 source.Dispose();
             }
+            //initialize new token source
             source = new CancellationTokenSource();
             var token = source.Token;
 
@@ -215,19 +233,39 @@ namespace IMAP
 
             //Get mail
             int i = 0;
+            /*if (!dicMail.ContainsKey(folderName))
+            {
+                dicMail.Add(folderName, new List<MailItem>());
+            }*/
             List<MailItem> mailItems = new List<MailItem>();
             Task.Run(() =>
             {
-                IEnumerable<uint> uidsUnSeen = client.Search(SearchCondition.Unseen());
+                IEnumerable<uint> uidsUnSeen = client.Search(SearchCondition.Unseen(), folderName);
                 IEnumerable<uint> uids = client.Search(SearchCondition.All(), folderName);
                 foreach (uint uid in uids)
                 {
+                    //check if that mail has seen yet
+                    //return true if unseen, false if seen 
                     bool isUnSeen = uidsUnSeen.Contains(uid);
+
+                    //get mail of folder to print out
                     using (MailMessage msg = client.GetMessage(uid, FetchOptions.Normal, false, folderName))
                     {
                         mailItems.Add(new MailItem());
                         mailItems[i].Dock = DockStyle.Top;
                         mailItems[i].main = this;
+
+                        //Get attachment and save to dictionary
+                        if (msg.Attachments.Count > 0 && !dicAttachment.ContainsKey(uid))
+                        {
+                            dicAttachment.Add(uid, new List<string>());
+
+                            for (int j = 0; j < msg.Attachments.Count; j++)
+                                dicAttachment[uid].Add(msg.Attachments[j].Name);
+                        }
+
+                        //Check if click on another folder button, cancel the task
+                        //else continue add mail item
                         if (token.IsCancellationRequested)
                             break;
                         else
@@ -248,10 +286,13 @@ namespace IMAP
                             }));
                     }
                 }
+                //Add "No mail here" label if there is no mail in folder
                 if (uids.Count() != 0)
                     pnlContainer.Controls.Remove(lbNoMail);
                 else
                     pnlContainer.Controls.Add(lbNoMail);
+
+                //remove the loading animation
                 pnlFolder.Controls.Remove(lP);
             }, token);
         }
@@ -276,6 +317,7 @@ namespace IMAP
             var result = MessageBox.Show("New mail received!\nGo to All Mail to read it?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
+                activeButton(btnAll);
                 loadMails("[Gmail]/All Mail");
             }
         }
@@ -289,11 +331,11 @@ namespace IMAP
 
             setViEnFalse(lbSubject);
 
-            setViEnFalse(lbAttachments);
-
             setViEnFalse(rtbFrom);
 
             setViEnFalse(rtbBody);
+
+            setViEnFalse(rtbAttach);
 
             lbNoMailSelect.Enabled = true;
             lbNoMailSelect.Visible = true;
@@ -309,6 +351,20 @@ namespace IMAP
         {
             rtb.Visible = false;
             rtb.Enabled = false;
+        }
+
+        private void activeButton(Bunifu.Framework.UI.BunifuFlatButton active)
+        {
+            btnInbox.Normalcolor = inactiveColor;
+            btnAll.Normalcolor = inactiveColor;
+            btnSent.Normalcolor = inactiveColor;
+            btnDrafts.Normalcolor = inactiveColor;
+            btnImportant.Normalcolor = inactiveColor;
+            btnStarred.Normalcolor = inactiveColor;
+            btnSpam.Normalcolor = inactiveColor;
+            btnTrash.Normalcolor = inactiveColor;
+
+            active.Normalcolor = activeColor;
         }
     }
 }

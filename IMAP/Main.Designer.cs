@@ -34,6 +34,7 @@ namespace IMAP
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.bunifuDragControl1 = new Bunifu.Framework.UI.BunifuDragControl(this.components);
             this.pnlFolder = new System.Windows.Forms.Panel();
+            this.bunifuSeparator5 = new Bunifu.Framework.UI.BunifuSeparator();
             this.btnLogOut = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnTrash = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnSpam = new Bunifu.Framework.UI.BunifuFlatButton();
@@ -43,7 +44,7 @@ namespace IMAP
             this.btnSent = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnAll = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnInbox = new Bunifu.Framework.UI.BunifuFlatButton();
-            this.bunifuFlatButton1 = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.bunifuSeparator4 = new Bunifu.Framework.UI.BunifuSeparator();
             this.bunifuSeparator2 = new Bunifu.Framework.UI.BunifuSeparator();
@@ -52,16 +53,18 @@ namespace IMAP
             this.pnlContainer = new System.Windows.Forms.Panel();
             this.lbNoMail = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.pnlContain = new System.Windows.Forms.Panel();
+            this.rtbAttach = new System.Windows.Forms.RichTextBox();
+            this.rtbFrom = new System.Windows.Forms.RichTextBox();
             this.lbNoMailSelect = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.lbDate = new Bunifu.Framework.UI.BunifuCustomLabel();
-            this.lbAttachments = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.sprtAttachment = new Bunifu.Framework.UI.BunifuSeparator();
             this.rtbBody = new System.Windows.Forms.RichTextBox();
             this.lbSubject = new Bunifu.Framework.UI.BunifuCustomLabel();
+            this.lbDate = new Bunifu.Framework.UI.BunifuCustomLabel();
             this.btnClose = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnMinimize = new Bunifu.Framework.UI.BunifuFlatButton();
-            this.rtbFrom = new System.Windows.Forms.RichTextBox();
+            this.bunifuSeparator1 = new Bunifu.Framework.UI.BunifuSeparator();
             this.pnlFolder.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.pnlContainer.SuspendLayout();
             this.pnlContain.SuspendLayout();
@@ -82,6 +85,7 @@ namespace IMAP
             // pnlFolder
             // 
             this.pnlFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
+            this.pnlFolder.Controls.Add(this.bunifuSeparator5);
             this.pnlFolder.Controls.Add(this.btnLogOut);
             this.pnlFolder.Controls.Add(this.btnTrash);
             this.pnlFolder.Controls.Add(this.btnSpam);
@@ -91,15 +95,29 @@ namespace IMAP
             this.pnlFolder.Controls.Add(this.btnSent);
             this.pnlFolder.Controls.Add(this.btnAll);
             this.pnlFolder.Controls.Add(this.btnInbox);
-            this.pnlFolder.Controls.Add(this.bunifuFlatButton1);
+            this.pnlFolder.Controls.Add(this.pictureBox1);
             this.pnlFolder.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlFolder.Location = new System.Drawing.Point(0, 0);
             this.pnlFolder.Name = "pnlFolder";
-            this.pnlFolder.Size = new System.Drawing.Size(200, 940);
+            this.pnlFolder.Size = new System.Drawing.Size(783, 940);
             this.pnlFolder.TabIndex = 1;
             this.pnlFolder.MouseDown += new System.Windows.Forms.MouseEventHandler(this._MouseDown);
             this.pnlFolder.MouseMove += new System.Windows.Forms.MouseEventHandler(this._MouseMove);
             this.pnlFolder.MouseUp += new System.Windows.Forms.MouseEventHandler(this._MouseUp);
+            // 
+            // bunifuSeparator5
+            // 
+            this.bunifuSeparator5.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator5.ForeColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator5.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator5.LineThickness = 1;
+            this.bunifuSeparator5.Location = new System.Drawing.Point(196, 0);
+            this.bunifuSeparator5.Margin = new System.Windows.Forms.Padding(0);
+            this.bunifuSeparator5.Name = "bunifuSeparator5";
+            this.bunifuSeparator5.Size = new System.Drawing.Size(1, 940);
+            this.bunifuSeparator5.TabIndex = 19;
+            this.bunifuSeparator5.Transparency = 255;
+            this.bunifuSeparator5.Vertical = true;
             // 
             // btnLogOut
             // 
@@ -434,7 +452,7 @@ namespace IMAP
             this.btnInbox.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
             this.btnInbox.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
             this.btnInbox.OnHoverTextColor = System.Drawing.Color.White;
-            this.btnInbox.selected = true;
+            this.btnInbox.selected = false;
             this.btnInbox.Size = new System.Drawing.Size(127, 40);
             this.btnInbox.TabIndex = 10;
             this.btnInbox.Text = "INBOX";
@@ -443,39 +461,18 @@ namespace IMAP
             this.btnInbox.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInbox.Click += new System.EventHandler(this.btnInbox_Click);
             // 
-            // bunifuFlatButton1
+            // pictureBox1
             // 
-            this.bunifuFlatButton1.Activecolor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
-            this.bunifuFlatButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
-            this.bunifuFlatButton1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.bunifuFlatButton1.BorderRadius = 0;
-            this.bunifuFlatButton1.ButtonText = "";
-            this.bunifuFlatButton1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.bunifuFlatButton1.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
-            this.bunifuFlatButton1.Iconcolor = System.Drawing.Color.Transparent;
-            this.bunifuFlatButton1.Iconimage = ((System.Drawing.Image)(resources.GetObject("bunifuFlatButton1.Iconimage")));
-            this.bunifuFlatButton1.Iconimage_right = null;
-            this.bunifuFlatButton1.Iconimage_right_Selected = null;
-            this.bunifuFlatButton1.Iconimage_Selected = null;
-            this.bunifuFlatButton1.IconMarginLeft = 0;
-            this.bunifuFlatButton1.IconMarginRight = 0;
-            this.bunifuFlatButton1.IconRightVisible = true;
-            this.bunifuFlatButton1.IconRightZoom = 0D;
-            this.bunifuFlatButton1.IconVisible = true;
-            this.bunifuFlatButton1.IconZoom = 75D;
-            this.bunifuFlatButton1.IsTab = false;
-            this.bunifuFlatButton1.Location = new System.Drawing.Point(63, 61);
-            this.bunifuFlatButton1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.bunifuFlatButton1.Name = "bunifuFlatButton1";
-            this.bunifuFlatButton1.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
-            this.bunifuFlatButton1.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(25)))), ((int)(((byte)(28)))));
-            this.bunifuFlatButton1.OnHoverTextColor = System.Drawing.Color.White;
-            this.bunifuFlatButton1.selected = true;
-            this.bunifuFlatButton1.Size = new System.Drawing.Size(75, 75);
-            this.bunifuFlatButton1.TabIndex = 9;
-            this.bunifuFlatButton1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bunifuFlatButton1.Textcolor = System.Drawing.Color.White;
-            this.bunifuFlatButton1.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Enabled = false;
+            this.pictureBox1.InitialImage = null;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(194, 259);
+            this.pictureBox1.TabIndex = 12;
+            this.pictureBox1.TabStop = false;
             // 
             // panel2
             // 
@@ -485,9 +482,9 @@ namespace IMAP
             this.panel2.Controls.Add(this.bunifuSeparator3);
             this.panel2.Controls.Add(this.lbTilte);
             this.panel2.Controls.Add(this.pnlContainer);
-            this.panel2.Location = new System.Drawing.Point(196, 0);
+            this.panel2.Location = new System.Drawing.Point(196, 28);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(587, 940);
+            this.panel2.Size = new System.Drawing.Size(587, 912);
             this.panel2.TabIndex = 1;
             // 
             // bunifuSeparator4
@@ -566,17 +563,41 @@ namespace IMAP
             // pnlContain
             // 
             this.pnlContain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
+            this.pnlContain.Controls.Add(this.rtbAttach);
             this.pnlContain.Controls.Add(this.rtbFrom);
             this.pnlContain.Controls.Add(this.lbNoMailSelect);
-            this.pnlContain.Controls.Add(this.lbDate);
-            this.pnlContain.Controls.Add(this.lbAttachments);
             this.pnlContain.Controls.Add(this.sprtAttachment);
             this.pnlContain.Controls.Add(this.rtbBody);
             this.pnlContain.Controls.Add(this.lbSubject);
-            this.pnlContain.Location = new System.Drawing.Point(789, 3);
+            this.pnlContain.Location = new System.Drawing.Point(789, 28);
             this.pnlContain.Name = "pnlContain";
-            this.pnlContain.Size = new System.Drawing.Size(811, 940);
+            this.pnlContain.Size = new System.Drawing.Size(811, 915);
             this.pnlContain.TabIndex = 2;
+            // 
+            // rtbAttach
+            // 
+            this.rtbAttach.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
+            this.rtbAttach.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbAttach.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbAttach.ForeColor = System.Drawing.Color.Gainsboro;
+            this.rtbAttach.Location = new System.Drawing.Point(43, 823);
+            this.rtbAttach.Name = "rtbAttach";
+            this.rtbAttach.ReadOnly = true;
+            this.rtbAttach.Size = new System.Drawing.Size(740, 102);
+            this.rtbAttach.TabIndex = 12;
+            this.rtbAttach.Text = "Attachment:\n";
+            // 
+            // rtbFrom
+            // 
+            this.rtbFrom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
+            this.rtbFrom.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rtbFrom.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbFrom.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.rtbFrom.Location = new System.Drawing.Point(43, 207);
+            this.rtbFrom.Name = "rtbFrom";
+            this.rtbFrom.Size = new System.Drawing.Size(740, 30);
+            this.rtbFrom.TabIndex = 7;
+            this.rtbFrom.Text = "From";
             // 
             // lbNoMailSelect
             // 
@@ -588,31 +609,6 @@ namespace IMAP
             this.lbNoMailSelect.Size = new System.Drawing.Size(251, 37);
             this.lbNoMailSelect.TabIndex = 6;
             this.lbNoMailSelect.Text = "No mails Selected";
-            // 
-            // lbDate
-            // 
-            this.lbDate.Enabled = false;
-            this.lbDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbDate.ForeColor = System.Drawing.Color.DimGray;
-            this.lbDate.Location = new System.Drawing.Point(516, 7);
-            this.lbDate.Name = "lbDate";
-            this.lbDate.Size = new System.Drawing.Size(209, 23);
-            this.lbDate.TabIndex = 5;
-            this.lbDate.Text = "Date";
-            this.lbDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lbDate.Visible = false;
-            // 
-            // lbAttachments
-            // 
-            this.lbAttachments.Enabled = false;
-            this.lbAttachments.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbAttachments.ForeColor = System.Drawing.Color.Gainsboro;
-            this.lbAttachments.Location = new System.Drawing.Point(38, 820);
-            this.lbAttachments.Name = "lbAttachments";
-            this.lbAttachments.Size = new System.Drawing.Size(745, 30);
-            this.lbAttachments.TabIndex = 4;
-            this.lbAttachments.Text = "Attachments";
-            this.lbAttachments.Visible = false;
             // 
             // sprtAttachment
             // 
@@ -653,6 +649,19 @@ namespace IMAP
             this.lbSubject.TabIndex = 0;
             this.lbSubject.Text = "Subject";
             this.lbSubject.Visible = false;
+            // 
+            // lbDate
+            // 
+            this.lbDate.Enabled = false;
+            this.lbDate.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbDate.ForeColor = System.Drawing.Color.DimGray;
+            this.lbDate.Location = new System.Drawing.Point(1322, 9);
+            this.lbDate.Name = "lbDate";
+            this.lbDate.Size = new System.Drawing.Size(209, 23);
+            this.lbDate.TabIndex = 5;
+            this.lbDate.Text = "Date";
+            this.lbDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lbDate.Visible = false;
             // 
             // btnClose
             // 
@@ -724,17 +733,19 @@ namespace IMAP
             this.btnMinimize.TextFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnMinimize.Click += new System.EventHandler(this.btnMinimize_Click);
             // 
-            // rtbFrom
+            // bunifuSeparator1
             // 
-            this.rtbFrom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
-            this.rtbFrom.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtbFrom.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbFrom.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.rtbFrom.Location = new System.Drawing.Point(43, 207);
-            this.rtbFrom.Name = "rtbFrom";
-            this.rtbFrom.Size = new System.Drawing.Size(740, 30);
-            this.rtbFrom.TabIndex = 7;
-            this.rtbFrom.Text = "From";
+            this.bunifuSeparator1.BackColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator1.ForeColor = System.Drawing.Color.Transparent;
+            this.bunifuSeparator1.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.bunifuSeparator1.LineThickness = 1;
+            this.bunifuSeparator1.Location = new System.Drawing.Point(782, 0);
+            this.bunifuSeparator1.Margin = new System.Windows.Forms.Padding(0);
+            this.bunifuSeparator1.Name = "bunifuSeparator1";
+            this.bunifuSeparator1.Size = new System.Drawing.Size(1, 940);
+            this.bunifuSeparator1.TabIndex = 12;
+            this.bunifuSeparator1.Transparency = 255;
+            this.bunifuSeparator1.Vertical = true;
             // 
             // Main
             // 
@@ -742,8 +753,10 @@ namespace IMAP
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(52)))), ((int)(((byte)(57)))));
             this.ClientSize = new System.Drawing.Size(1600, 940);
+            this.Controls.Add(this.bunifuSeparator1);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.lbDate);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pnlFolder);
             this.Controls.Add(this.pnlContain);
@@ -754,6 +767,7 @@ namespace IMAP
             this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             this.pnlFolder.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.pnlContainer.ResumeLayout(false);
@@ -772,11 +786,9 @@ namespace IMAP
         private Bunifu.Framework.UI.BunifuDragControl bunifuDragControl1;
         private System.Windows.Forms.Panel pnlContain;
         private System.Windows.Forms.Panel pnlContainer;
-        private Bunifu.Framework.UI.BunifuFlatButton bunifuFlatButton1;
         private Bunifu.Framework.UI.BunifuFlatButton btnMinimize;
         private Bunifu.Framework.UI.BunifuFlatButton btnClose;
         private Bunifu.Framework.UI.BunifuCustomLabel lbTilte;
-        private Bunifu.Framework.UI.BunifuCustomLabel lbAttachments;
         private Bunifu.Framework.UI.BunifuSeparator sprtAttachment;
         private System.Windows.Forms.RichTextBox rtbBody;
         private Bunifu.Framework.UI.BunifuCustomLabel lbSubject;
@@ -796,5 +808,9 @@ namespace IMAP
         private Bunifu.Framework.UI.BunifuCustomLabel lbNoMail;
         private Bunifu.Framework.UI.BunifuCustomLabel lbNoMailSelect;
         private System.Windows.Forms.RichTextBox rtbFrom;
+        private System.Windows.Forms.RichTextBox rtbAttach;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator1;
+        private Bunifu.Framework.UI.BunifuSeparator bunifuSeparator5;
     }
 }
