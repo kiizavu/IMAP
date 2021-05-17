@@ -120,6 +120,7 @@ namespace IMAP
             this.tbUser.Size = new System.Drawing.Size(387, 39);
             this.tbUser.TabIndex = 25;
             this.tbUser.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbUser.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbUP_KeyDown);
             // 
             // tbPass
             // 
@@ -133,6 +134,7 @@ namespace IMAP
             this.tbPass.Size = new System.Drawing.Size(387, 39);
             this.tbPass.TabIndex = 26;
             this.tbPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbPass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbUP_KeyDown);
             // 
             // btnExit
             // 

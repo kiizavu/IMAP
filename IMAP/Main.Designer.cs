@@ -546,7 +546,7 @@ namespace IMAP
             this.pnlContainer.Controls.Add(this.lbNoMail);
             this.pnlContainer.Location = new System.Drawing.Point(3, 223);
             this.pnlContainer.Name = "pnlContainer";
-            this.pnlContainer.Size = new System.Drawing.Size(584, 714);
+            this.pnlContainer.Size = new System.Drawing.Size(584, 692);
             this.pnlContainer.TabIndex = 0;
             // 
             // lbNoMail
@@ -580,7 +580,7 @@ namespace IMAP
             this.rtbAttach.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtbAttach.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtbAttach.ForeColor = System.Drawing.Color.Gainsboro;
-            this.rtbAttach.Location = new System.Drawing.Point(43, 823);
+            this.rtbAttach.Location = new System.Drawing.Point(43, 802);
             this.rtbAttach.Name = "rtbAttach";
             this.rtbAttach.ReadOnly = true;
             this.rtbAttach.Size = new System.Drawing.Size(740, 102);
